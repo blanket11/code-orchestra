@@ -1,0 +1,67 @@
+{
+ "format": "code-orchestra/recording@1",
+ "note": "Real Claude Code CLI events captured by the mod (kind + relative time only).",
+ "recordedAt": "2026-10-15T10:34:35.651Z",
+ "events": [
+  {
+   "atMs": 0,
+   "kind": "prompt"
+  },
+  {
+   "atMs": 3125,
+   "kind": "bash"
+  },
+  {
+   "atMs": 3445,
+   "kind": "test_fail"
+  },
+  {
+   "atMs": 4978,
+   "kind": "read"
+  },
+  {
+   "atMs": 5525,
+   "kind": "read"
+  },
+  {
+   "atMs": 6073,
+   "kind": "read"
+  },
+  {
+   "atMs": 12093,
+   "kind": "bash"
+  },
+  {
+   "atMs": 12107,
+   "kind": "test_fail"
+  },
+  {
+   "atMs": 14478,
+   "kind": "edit"
+  },
+  {
+   "atMs": 16804,
+   "kind": "edit"
+  },
+  {
+   "atMs": 17993,
+   "kind": "edit"
+  },
+  {
+   "atMs": 20397,
+   "kind": "edit"
+  },
+  {
+   "atMs": 22059,
+   "kind": "bash"
+  },
+  {
+   "atMs": 22128,
+   "kind": "test_pass"
+  },
+  {
+   "atMs": 29662,
+   "kind": "turn_end"
+  }
+ ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "code-orchestra",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test engine/test/*.test.mjs",
+    "check": "bash scripts/check.sh"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

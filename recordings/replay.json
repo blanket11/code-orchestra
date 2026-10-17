@@ -1,0 +1,114 @@
+{
+ "format": "code-orchestra/recording@1",
+ "note": "REPLAY source: real Claude Code CLI events captured by the mod on the bundled sample app (kind + relative time only, no paths or content). Sessions joined in order.",
+ "sessions": [
+  {
+   "file": "capture-1-fix-bug.json",
+   "recordedAt": "2026-10-15T10:33:02.821Z",
+   "events": 9
+  },
+  {
+   "file": "capture-2-add-feature.json",
+   "recordedAt": "2026-10-15T10:34:35.651Z",
+   "events": 15
+  }
+ ],
+ "events": [
+  {
+   "atMs": 3000,
+   "kind": "prompt"
+  },
+  {
+   "atMs": 6818,
+   "kind": "bash"
+  },
+  {
+   "atMs": 7168,
+   "kind": "test_fail"
+  },
+  {
+   "atMs": 10317,
+   "kind": "bash"
+  },
+  {
+   "atMs": 10332,
+   "kind": "test_fail"
+  },
+  {
+   "atMs": 12446,
+   "kind": "read"
+  },
+  {
+   "atMs": 13404,
+   "kind": "edit"
+  },
+  {
+   "atMs": 15513,
+   "kind": "bash"
+  },
+  {
+   "atMs": 19192,
+   "kind": "turn_end"
+  },
+  {
+   "atMs": 22192,
+   "kind": "prompt"
+  },
+  {
+   "atMs": 25317,
+   "kind": "bash"
+  },
+  {
+   "atMs": 25637,
+   "kind": "test_fail"
+  },
+  {
+   "atMs": 27170,
+   "kind": "read"
+  },
+  {
+   "atMs": 27717,
+   "kind": "read"
+  },
+  {
+   "atMs": 28265,
+   "kind": "read"
+  },
+  {
+   "atMs": 34285,
+   "kind": "bash"
+  },
+  {
+   "atMs": 34299,
+   "kind": "test_fail"
+  },
+  {
+   "atMs": 36670,
+   "kind": "edit"
+  },
+  {
+   "atMs": 38996,
+   "kind": "edit"
+  },
+  {
+   "atMs": 40185,
+   "kind": "edit"
+  },
+  {
+   "atMs": 42589,
+   "kind": "edit"
+  },
+  {
+   "atMs": 44251,
+   "kind": "bash"
+  },
+  {
+   "atMs": 44320,
+   "kind": "test_pass"
+  },
+  {
+   "atMs": 51854,
+   "kind": "turn_end"
+  }
+ ]
+}

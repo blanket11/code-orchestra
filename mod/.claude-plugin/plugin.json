@@ -1,0 +1,6 @@
+{
+  "name": "code-orchestra",
+  "version": "0.1.0",
+  "description": "Turns Claude Code's live work into synced electronic music and visuals in a pane.",
+  "types": "./types/index.d.ts"
+}

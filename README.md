@@ -18,7 +18,7 @@ Claude Code CLI の Mod です。Claude の作業イベント（読む・探す�
 ## インストール
 
 ```bash
-git clone <このリポジトリのURL> code-orchestra
+git clone https://github.com/blanket11/code-orchestra.git code-orchestra
 cd code-orchestra && npm install   # 型検査用の TypeScript のみ。実行には不要
 ```
 
@@ -118,8 +118,8 @@ Mod: tick → Raster の光のステージ（66ms ごとに $.ui.blit）＋メ�
 
 ## 動作要件
 
-- Claude Code CLI 2.1.299（`~/.local/bin/claude`）
+- Claude Code CLI 2.1.299 以降（`~/.local/bin/claude`）
 - Node 24 以降
-- ffplay（`/opt/homebrew/bin/ffplay`、ffmpeg 8.1）
+- ffplay（`brew install ffmpeg`。`/opt/homebrew/bin/ffplay` で確認）
 
 実行時にネット接続、API キー、追加のモデル呼び出しは使いません。音はすべて自作の合成音です。

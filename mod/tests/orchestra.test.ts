@@ -1,7 +1,7 @@
 import { expect, mock, test } from 'claude-code/testing'
 import type { Engine } from 'claude-code/testing'
 import type { On } from 'claude-code'
-import { isTestCommand, kindAtEnd, kindAtStart } from '../hooks/classify'
+import { isTestCommand, kindAtEnd, kindAtStart, kindsForShell } from '../hooks/classify'
 import { advance, createViz, draw, onTick } from '../hooks/stage'
 
 const PANE = 'code-orchestra'
@@ -60,6 +60,19 @@ test('classifies tool calls; a zero exit code alone is never a test pass', () =>
   expect(kindAtEnd('Bash', 'node --test test/scale.test.mjs', { isError: false, denied: false, text: '✔ a (1ms)\nℹ tests 2\nℹ pass 2\nℹ fail 0' })).toBe('test_pass')
   expect(kindAtEnd('Bash', 'node --test t.mjs', { isError: true, denied: false, text: 'ℹ tests 2\nℹ pass 1\nℹ fail 1' })).toBe('test_fail')
   expect(isTestCommand('echo hello')).toBe(false)
+})
+
+test('shell commands sing by what they do: reads/searches → melody, edits → beat', () => {
+  expect(kindsForShell('ls; cat package.json; cat scale.mjs; ls test* 2>/dev/null')).toEqual(['search', 'read', 'read', 'search'])
+  expect(kindsForShell('node --test test/scale.test.mjs 2>&1 | tail -5')).toEqual(['bash', 'read'])
+  expect(kindsForShell("sed -i '' 's/a/b/' scale.mjs && node --test t.mjs")).toEqual(['edit', 'bash'])
+  expect(kindsForShell("cat >> scale.mjs <<'EOF'\nexport function x() {}\nEOF")).toEqual(['edit'])
+  expect(kindsForShell('echo hi > notes.txt')).toEqual(['edit'])
+  expect(kindsForShell('npm run build > /dev/null 2>&1')).toEqual(['bash'])
+  expect(kindsForShell('git status && git log --oneline -5')).toEqual(['search', 'search'])
+  expect(kindsForShell('FOO=1 rg TODO src')).toEqual(['search'])
+  expect(kindsForShell('a; b; c; d; e; f; g; h').length).toBe(6)
+  expect(kindsForShell('')).toEqual(['bash'])
 })
 
 test('observes a tool call without changing it or running it twice', async ($, on) => {

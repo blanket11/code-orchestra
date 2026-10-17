@@ -7,7 +7,7 @@
 import { atom, update } from 'claude-code'
 import type { EngineInterface, Register, RenderElement } from 'claude-code'
 import type { OrchestraUi } from '../types'
-import { KIND_LABEL, kindAtEnd, kindAtStart, type Kind } from './classify'
+import { KIND_LABEL, kindAtEnd, kindAtStart, kindsForShell, type Kind } from './classify'
 import { advance, createViz, draw, onTick, toCells, type Tick } from './stage'
 
 type $T = EngineInterface
@@ -273,8 +273,15 @@ export const register: Register = on => {
   // Observe only: never deny, never rewrite, never call the tool twice.
   on('tool.call', async ($, e, next) => {
     const tool = e.tool
-    const startKind = kindAtStart(tool)
-    if (startKind) emit($, startKind)
+    if (tool === 'Bash') {
+      // A shell command can read, search and edit in one go: one event per part.
+      try {
+        for (const k of kindsForShell(String((e as unknown as { command?: unknown }).command ?? ''))) emit($, k)
+      } catch {}
+    } else {
+      const startKind = kindAtStart(tool)
+      if (startKind) emit($, startKind)
+    }
     const ran = await next(e)
     try {
       const r = ran as { deny?: string; isError?: boolean; text?: string }

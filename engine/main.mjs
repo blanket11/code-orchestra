@@ -28,6 +28,12 @@ const LATENCY_MS = Number(args.latency || process.env.CODE_ORCHESTRA_LATENCY_MS 
 const AHEAD_FRAMES = Math.round(SAMPLE_RATE * 0.2)
 const BLOCK = 480
 const RUN_DIR = path.dirname(SOCK)
+// Optional recording support (demo videos): audio start + every heard tick, with epoch times.
+const RECORD_DIR = process.env.CODE_ORCHESTRA_RECORD_DIR || ''
+function record(file, obj) {
+  if (!RECORD_DIR) return
+  try { fs.appendFileSync(path.join(RECORD_DIR, file), JSON.stringify({ epochMs: Date.now(), ...obj }) + '\n') } catch {}
+}
 const LOCK = path.join(RUN_DIR, 'active.json')
 
 fs.mkdirSync(RUN_DIR, { recursive: true, mode: 0o700 })
@@ -104,6 +110,7 @@ function startAudio() {
   child.on('error', err => { emit(stateMsg({ error: `ffplay: ${err.message}` })); running = false; ffplay = null })
   running = true
   startWall = performance.now()
+  record('audio.jsonl', { event: 'start', sampleRate: SAMPLE_RATE, latencyMs: LATENCY_MS })
   written = 0
   pendingTicks = []
   performer.fadeTo(volume, 1.5)
@@ -126,6 +133,7 @@ function stopAudio(reason) {
     }
     pendingTicks = []
     releaseActive()
+    record('audio.jsonl', { event: 'stop', reason })
     emit(stateMsg({ reason }))
   }, 900)
 }
@@ -152,6 +160,7 @@ function pump() {
     delete t.offset; delete t.heardAt
     t.voices = performer.voices
     t.gain = Math.round(performer.gain * 100) / 100
+    record('ticks.jsonl', t)
     emit(t)
   }
   if (!running && !stopTimer && loopTimer && pendingTicks.length === 0) { clearInterval(loopTimer); loopTimer = null }
